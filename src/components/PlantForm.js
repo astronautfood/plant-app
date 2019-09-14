@@ -67,12 +67,7 @@ class PlantForm extends React.Component {
 
     handleTimeChange = (e) => {
         this.setState({
-            selectedTime: e.target.value,
-            // everyOtherDay: 8640000000,
-            // everyWeek: 604800000000,
-            // everyTwoWeeks: 121000000000,
-            // everyThreeWeeks: 1814000000000,
-            // everyMonth: 7884000000000
+            selectedTime: e.target.value
         });
     }
 
@@ -85,7 +80,6 @@ class PlantForm extends React.Component {
             dateSubmitted: this.state.selectedDate
         };
         dbRef.push(newItem);
-        console.log("update", this.state.selectedDate);
     }
 
     removeItem = (key) => {
@@ -96,8 +90,6 @@ class PlantForm extends React.Component {
     
     updateDate = e => {
         const date = moment(e.target.value);
-        console.log("HELLO");
-        // console.log(date);
 
         this.setState({
             selectedDate: date.format('YYYY-MM-DD'),
@@ -126,7 +118,6 @@ class PlantForm extends React.Component {
     }
 
     render() {
-        console.log(this.state.items);
         return (
             <React.Fragment>
                 {this.state.user ? <button onClick={this.logout}>Log Out</button> : <button onClick={this.login}>Log In</button>}
