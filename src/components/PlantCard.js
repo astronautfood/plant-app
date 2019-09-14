@@ -24,6 +24,7 @@ class PlantCard extends React.Component {
 
     render() {
         const { items, removeItem } = this.props;
+        console.log(items.dateSubmitted);
         return (
             <React.Fragment>
                 <section className="plant-cards">
@@ -31,8 +32,9 @@ class PlantCard extends React.Component {
                         <div className="plant-card">
                             <ul>
                                 {items.map((item, i) => {
+                                    console.log(item);
                                     let lastWatered = moment(item.dateSubmitted);
-                                    const waterTime = lastWatered.add(this.getWaterDate(item.water), 'days');
+                                    const waterTime = lastWatered.add('days', this.getWaterDate(item.water));
                                     const whenToWater = moment().to(waterTime);
 
                                     //create dynamic user cards

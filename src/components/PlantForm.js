@@ -1,17 +1,20 @@
 import React from 'react';
 import PlantCard from './PlantCard';
-import Calendar from 'react-calendar';
 import firebase from '../firebase';
+import moment from 'moment';
 
 const dbRef = firebase.database().ref('/items');
 
+const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
 
 class PlantForm extends React.Component {
     state = {
+        user: null,
         selectedOption: '',
         dynamicName: '',
         selectedTime: '',
-        date: '',
+        selectedDate: '',
         everyOtherDay: '',
         everyWeek: '',
         everyTwoWeeks: '',
@@ -21,25 +24,36 @@ class PlantForm extends React.Component {
     }
 
     componentDidMount() {
-        dbRef.on('value', (snapshot) => {
-            const newItemsArray = [];
-            const firebaseItems = snapshot.val();
+        this.loadUser();
+    }
 
-            for (let key in firebaseItems) {
-                const firebaseItem = firebaseItems[key];
-                firebaseItem.id = key;
+    loadUser() {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({ user });
 
-                newItemsArray.push(firebaseItem);
-            }
-            console.log(newItemsArray);
+                dbRef.on('value', (snapshot) => {
+                    const newItemsArray = [];
+                    const firebaseItems = snapshot.val();
 
-            this.setState({
-                items: newItemsArray
-            });
+                    for (let key in firebaseItems) {
+                        const firebaseItem = firebaseItems[key];
+                        firebaseItem.id = key;
+
+                        newItemsArray.push(firebaseItem);
+                    }
+                    console.log(newItemsArray);
+
+                    this.setState({
+                        items: newItemsArray
+                    });
+                });
+            } 
         });
     }
 
-    handleOptionChange = (e) => {
+
+    handleOptionChnge = (e) => {
         this.setState({
             selectedOption: e.target.value
         });
@@ -54,11 +68,11 @@ class PlantForm extends React.Component {
     handleTimeChange = (e) => {
         this.setState({
             selectedTime: e.target.value,
-            everyOtherDay: 8640000000,
-            everyWeek: 604800000000,
-            everyTwoWeeks: 121000000000,
-            everyThreeWeeks: 1814000000000,
-            everyMonth: 7884000000000
+            // everyOtherDay: 8640000000,
+            // everyWeek: 604800000000,
+            // everyTwoWeeks: 121000000000,
+            // everyThreeWeeks: 1814000000000,
+            // everyMonth: 7884000000000
         });
     }
 
@@ -68,9 +82,10 @@ class PlantForm extends React.Component {
             plant: this.state.selectedOption,
             water: this.state.selectedTime,
             name: this.state.dynamicName,
-            dateSubmitted: this.state.date
+            dateSubmitted: this.state.selectedDate
         };
         dbRef.push(newItem);
+        console.log("update", this.state.selectedDate);
     }
 
     removeItem = (key) => {
@@ -78,18 +93,43 @@ class PlantForm extends React.Component {
         itemRef.remove();
     }
 
-    updateDate = date => {
-        // const date = moment(e.target.value);
-        this.setState({
-            date
-        });
+    
+    updateDate = e => {
+        const date = moment(e.target.value);
+        console.log("HELLO");
+        // console.log(date);
 
-        console.log(date);
+        this.setState({
+            selectedDate: date.format('YYYY-MM-DD'),
+        });
+    }
+
+
+    login = () => {
+      auth.signInWithPopup(provider) 
+        .then((result) => { 
+          const user = result.user;
+          this.setState({
+            user
+        });
+      });
+    }
+
+    logout  = () => {
+      window.location.reload();
+      auth.signOut()
+        .then(() => {
+          this.setState({
+            user: null
+          });
+        });
     }
 
     render() {
+        console.log(this.state.items);
         return (
             <React.Fragment>
+                {this.state.user ? <button onClick={this.logout}>Log Out</button> : <button onClick={this.login}>Log In</button>}
                 <section className="add-plants">
                     <form onSubmit={this.handleSubmit}>
                         <div className="type">
@@ -189,12 +229,15 @@ class PlantForm extends React.Component {
                                 />
                             </div>
                         </div>
-                        <div className="calendar">
-                            <Calendar
-                                onChange={this.updateDate}
-                                date={this.state.date}
+                         <div className="instruction">When was the last time you watered your plant?</div>
+                            <input 
+                                id="date" 
+                                type="date" 
+                                name="selectedDate" 
+                                onChange={this.updateDate} 
+                                value={this.state.selectedDate} 
+                                max={moment().format("YYYY-MM-DD")}
                             />
-                        </div>
                         <input type="submit" />
                     </form>
                 </section>
@@ -202,6 +245,7 @@ class PlantForm extends React.Component {
                     items={this.state.items}
                     getWaterDate={this.getWaterDate}
                     removeItem={this.removeItem}
+                    user={this.state.user}
                 />
             </React.Fragment>
         )
