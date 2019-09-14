@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import PlantCard from './PlantCard';
 import Calendar from 'react-calendar';
 import firebase from '../firebase';
@@ -19,7 +18,6 @@ class PlantForm extends React.Component {
         everyThreeWeeks: '',
         everyMonth: '',
         items: [],
-
     }
 
     componentDidMount() {
@@ -82,11 +80,7 @@ class PlantForm extends React.Component {
 
     updateDate = date => {
         // const date = moment(e.target.value);
-        console.log("HELLO");
-        console.log(date);
-
         this.setState({
-            // date: date.format(),
             date
         });
 
@@ -107,7 +101,6 @@ class PlantForm extends React.Component {
                                     name="plantType" 
                                     id="cacti" 
                                     value={this.state.selectedOption ? 'Cactus' : undefined} 
-                                    // checked={this.state.selectedOption === 'Cactus'} 
                                     onChange={this.handleOptionChange} 
                                 />
                             </div>
@@ -118,7 +111,6 @@ class PlantForm extends React.Component {
                                     name="plantType" 
                                     id="succulent" 
                                     value={this.state.selectedOption ? 'Succulent' : undefined} 
-                                    // checked={this.state.selectedOption === 'Succulent'} 
                                     onChange={this.handleOptionChange} 
                                 />
                             </div>
@@ -129,7 +121,6 @@ class PlantForm extends React.Component {
                                     name="plantType" 
                                     id="house-plant" 
                                     value={this.state.selectedOption ? 'House' : undefined} 
-                                    // checked={this.state.selectedOption === 'House Plant'} 
                                     onChange={this.handleOptionChange} 
                                 />
                             </div>
@@ -156,7 +147,6 @@ class PlantForm extends React.Component {
                                     name="waterTracker" 
                                     id="other-day" 
                                     value="every other day" 
-                                    // checked={this.state.selectedTime === 'every other day'} 
                                     onChange={this.handleTimeChange} 
                                 />
                             </div>
@@ -166,7 +156,6 @@ class PlantForm extends React.Component {
                                     type="radio" 
                                     name="waterTracker" 
                                     id="week" value="every week" 
-                                    // checked={this.state.selectedTime === 'every week'} 
                                     onChange={this.handleTimeChange} 
                                 />
                             </div>
@@ -177,7 +166,6 @@ class PlantForm extends React.Component {
                                     name="waterTracker" 
                                     id="two-weeks" 
                                     value="every two weeks" 
-                                    // checked={this.state.selectedTime === 'every two weeks'} 
                                     onChange={this.handleTimeChange} 
                                 />
                             </div>
@@ -188,7 +176,6 @@ class PlantForm extends React.Component {
                                     name="waterTracker" 
                                     id="three-weeks" 
                                     value="every three weeks" 
-                                    // checked={this.state.selectedTime === 'every three weeks'} 
                                     onChange={this.handleTimeChange} 
                                 />
                             </div>
@@ -198,7 +185,6 @@ class PlantForm extends React.Component {
                                     type="radio" 
                                     name="waterTracker" 
                                     id="month" value="every month" 
-                                    // checked={this.state.selectedTime === 'every month'} 
                                     onChange={this.handleTimeChange} 
                                 />
                             </div>
@@ -208,14 +194,6 @@ class PlantForm extends React.Component {
                                 onChange={this.updateDate}
                                 date={this.state.date}
                             />
-                            {/* <div className="instruction">When was the last time you watered your plant?</div>
-                            <input 
-                                id="date" 
-                                type="date" 
-                                name="selectedDate" 
-                                onChange={this.updateDate} 
-                                value={this.state.selectedDate ? this.state.selectedDate : undefined} 
-                            /> */}
                         </div>
                         <input type="submit" />
                     </form>
