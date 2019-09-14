@@ -5,9 +5,12 @@ import firebase from '../firebase';
 
 const dbRef = firebase.database().ref('/items');
 
+const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
 
 class PlantForm extends React.Component {
     state = {
+        user: null,
         selectedOption: '',
         dynamicName: '',
         selectedTime: '',
@@ -21,25 +24,36 @@ class PlantForm extends React.Component {
     }
 
     componentDidMount() {
-        dbRef.on('value', (snapshot) => {
-            const newItemsArray = [];
-            const firebaseItems = snapshot.val();
+        this.loadUser();
+    }
 
-            for (let key in firebaseItems) {
-                const firebaseItem = firebaseItems[key];
-                firebaseItem.id = key;
+    loadUser() {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({ user });
 
-                newItemsArray.push(firebaseItem);
-            }
-            console.log(newItemsArray);
+                dbRef.on('value', (snapshot) => {
+                    const newItemsArray = [];
+                    const firebaseItems = snapshot.val();
 
-            this.setState({
-                items: newItemsArray
-            });
+                    for (let key in firebaseItems) {
+                        const firebaseItem = firebaseItems[key];
+                        firebaseItem.id = key;
+
+                        newItemsArray.push(firebaseItem);
+                    }
+                    console.log(newItemsArray);
+
+                    this.setState({
+                        items: newItemsArray
+                    });
+                });
+            } 
         });
     }
 
-    handleOptionChange = (e) => {
+
+    handleOptionChnge = (e) => {
         this.setState({
             selectedOption: e.target.value
         });
@@ -87,9 +101,31 @@ class PlantForm extends React.Component {
         console.log(date);
     }
 
+    login = () => {
+      auth.signInWithPopup(provider) 
+        .then((result) => {
+          const user = result.user;
+          this.setState({
+            user
+        });
+      });
+    }
+
+    logout  = () => {
+      window.location.reload();
+      auth.signOut()
+        .then(() => {
+          this.setState({
+            user: null
+          });
+        });
+    }
+
     render() {
+        console.log(this.state.items);
         return (
             <React.Fragment>
+                {this.state.user ? <button onClick={this.logout}>Log Out</button> : <button onClick={this.login}>Log In</button>}
                 <section className="add-plants">
                     <form onSubmit={this.handleSubmit}>
                         <div className="type">
@@ -189,12 +225,14 @@ class PlantForm extends React.Component {
                                 />
                             </div>
                         </div>
-                        <div className="calendar">
-                            <Calendar
-                                onChange={this.updateDate}
-                                date={this.state.date}
-                            />
-                        </div>
+                        <Calendar
+                            className="calendar"
+                            onChange={this.updateDate}
+                            date={this.state.date}
+                            showNeighboringMonth={false}
+                            view={"month"}
+                            maxDate={new Date()}
+                        />
                         <input type="submit" />
                     </form>
                 </section>
@@ -202,6 +240,7 @@ class PlantForm extends React.Component {
                     items={this.state.items}
                     getWaterDate={this.getWaterDate}
                     removeItem={this.removeItem}
+                    user={this.state.user}
                 />
             </React.Fragment>
         )
