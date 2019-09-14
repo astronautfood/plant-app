@@ -192,7 +192,8 @@ class PlantForm extends React.Component {
                             </div>
                             <div className="flex-container">
                                 <label htmlFor="two-weeks">Every Two Weeks</label>
-                                <input 
+                                <input
+                                    checked="checked"
                                     type="radio" 
                                     name="waterTracker" 
                                     id="two-weeks" 
