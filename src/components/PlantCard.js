@@ -25,7 +25,6 @@ class PlantCard extends React.Component {
 
     render() {
         const { items, removeItem } = this.props;
-        console.log(items)
         return (
             <ul className="plant-cards">
                     {items.map((item, i) => {

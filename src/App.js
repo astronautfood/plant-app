@@ -13,7 +13,7 @@ class App extends React.Component {
     const dbRef = firebase.database().ref();
 
     dbRef.on('value', (response) => {
-      console.log(response.val());
+      console.log('response', response.val());
     })
   }
 
