@@ -11,7 +11,7 @@ const auth = firebase.auth();
 class PlantForm extends React.Component {
     state = {
         user: null,
-        selectedOption: '',
+        selectedPlant: '',
         dynamicName: '',
         selectedTime: '',
         selectedDate: '',
@@ -53,9 +53,9 @@ class PlantForm extends React.Component {
     }
 
 
-    handleOptionChnge = (e) => {
+    handleTypeChange = (e) => {
         this.setState({
-            selectedOption: e.target.value
+            selectedPlant: e.target.value
         });
     }
 
@@ -71,10 +71,18 @@ class PlantForm extends React.Component {
         });
     }
 
+    updateDate = e => {
+        const date = moment(e.target.value);
+
+        this.setState({
+            selectedDate: date.format('YYYY-MM-DD'),
+        });
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         const newItem = {
-            plant: this.state.selectedOption,
+            plantType: this.state.selectedPlant,
             water: this.state.selectedTime,
             name: this.state.dynamicName,
             dateSubmitted: this.state.selectedDate
@@ -85,15 +93,6 @@ class PlantForm extends React.Component {
     removeItem = (key) => {
         const itemRef = firebase.database().ref(`/items/${key}`);
         itemRef.remove();
-    }
-
-    
-    updateDate = e => {
-        const date = moment(e.target.value);
-
-        this.setState({
-            selectedDate: date.format('YYYY-MM-DD'),
-        });
     }
 
 
@@ -129,8 +128,8 @@ class PlantForm extends React.Component {
                                 type="radio" 
                                 name="plantType" 
                                 id="cacti" 
-                                value={this.state.selectedOption ? 'Cactus' : undefined} 
-                                onChange={this.handleOptionChange} 
+                                value="Cactus"
+                                onChange={this.handleTypeChange} 
                             />
                             <label htmlFor="cacti">Cactus</label>
                         </div>
@@ -139,8 +138,8 @@ class PlantForm extends React.Component {
                                 type="radio" 
                                 name="plantType" 
                                 id="succulent" 
-                                value={this.state.selectedOption ? 'Succulent' : undefined} 
-                                onChange={this.handleOptionChange} 
+                                value="Succulent"
+                                onChange={this.handleTypeChange} 
                             />
                             <label htmlFor="succulent">Succulent</label>
                         </div>
@@ -148,11 +147,21 @@ class PlantForm extends React.Component {
                             <input 
                                 type="radio" 
                                 name="plantType" 
-                                id="house-plant" 
-                                value={this.state.selectedOption ? 'House' : undefined} 
-                                onChange={this.handleOptionChange} 
+                                id="housePlant" 
+                                value="House Plant"
+                                onChange={this.handleTypeChange} 
                             />
-                            <label htmlFor="house-plant">House Plant</label>
+                            <label htmlFor="housePlant">House Plant</label>
+                        </div>
+                        <div className="plant-form__input-container">
+                            <input 
+                                type="radio" 
+                                name="plantType" 
+                                id="tropicalPlant" 
+                                value="Tropical Plant" 
+                                onChange={this.handleTypeChange} 
+                            />
+                            <label htmlFor="tropicalPlant">Tropical Plant</label>
                         </div>
                     </div>
                     <div className="plant-form__dynamic-name">
@@ -190,7 +199,6 @@ class PlantForm extends React.Component {
                         </div>
                         <div className="plant-form__input-container">
                             <input
-                                checked="checked"
                                 type="radio" 
                                 name="waterTracker" 
                                 id="two-weeks" 
