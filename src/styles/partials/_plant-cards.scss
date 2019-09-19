@@ -1,0 +1,62 @@
+.plant-cards {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 280px));
+    grid-gap: 25px;
+    font-size: 1.8rem;
+    
+    &__card {
+        background-color: $primary;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: $card-color;
+        padding-bottom: 40px;
+        position: relative;
+        height: 255px;
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        &--given-details li {
+            font-size: 1.5rem;
+            margin: 5px 0;
+            color: $drk-gray;
+        }
+
+        &--today {
+            color: $drk-gray;
+            font-size: 1.6rem; 
+        }
+
+        &--water-me-in {
+            display: flex;
+            justify-content: space-between;
+            font-size: 2rem;
+            color: $aqua;
+            font-weight: 600;
+            margin-top: 15px;
+
+            img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        &--remove {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            border-radius: 0px 0px 8px;
+            background-color: $secondary;
+            cursor: pointer;
+            border: 0;
+            min-width: 120px;
+            color: $drk-gray;
+            font-size: 1.6rem;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
+            padding: 10px 6px;
+            font-weight: 600;
+        }
+    }
+} 

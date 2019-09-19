@@ -2,19 +2,20 @@
 	max-width: 300px;
 	width: 100%;
 	margin-bottom: 100px;
-    background-color: #fff;
+    background-color: $primary;
     border-radius: 15px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23);
     padding: 5px 15px 55px;
     font-size: 1.6rem;
     position: relative;
+    height: 590px;
 
     &__input-container {
         margin: 5px;
 
         label {
             margin-left: 10px;
-            color: #333;
+            color: $drk-gray;
         }
 
         input:checked {
@@ -81,7 +82,7 @@
         cursor: pointer;
         border: 0;
         background-color: $secondary;
-        color: #fff;
+        color: $primary;
         font-size: 2rem;
         font-weight: 700;
         padding: 15px 6px;

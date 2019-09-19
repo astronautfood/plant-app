@@ -2,6 +2,6 @@
 
 main {
     display: grid;
-    grid-template-columns: repeat(2, minmax(200px, 1fr));
-    grid-gap: 30px;
+    grid-template-columns: minmax(200px, 300px) 1fr;
+    grid-gap: 40px;
 }
