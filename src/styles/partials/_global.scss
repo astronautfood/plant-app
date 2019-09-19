@@ -9,7 +9,8 @@ a{display: block; text-decoration: none; color: #000;}
 body {
 	margin: 0;
 	background-color: $aqua;
-	font-family: $font-fam;
+    font-family: $font-fam;
+    padding-bottom: 50px;
 }
 
 .menu {
