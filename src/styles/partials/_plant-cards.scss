@@ -1,9 +1,13 @@
 .plant-cards {
     display: grid;
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(215px, 280px));
+    grid-template-columns: repeat(auto-fill, minmax(215px, 280px));
+    grid-auto-rows: 255px;
     grid-gap: 25px;
     font-size: 1.8rem;
+
+    @include respond_to(medium) {
+        justify-self: center;
+    }
     
     &__card {
         background-color: $primary;
@@ -12,7 +16,6 @@
         background-color: $card-color;
         padding-bottom: 40px;
         position: relative;
-        height: 255px;
 
         p {
             margin-bottom: 15px;

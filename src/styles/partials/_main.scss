@@ -4,4 +4,9 @@ main {
     display: grid;
     grid-template-columns: minmax(200px, 300px) 1fr;
     grid-gap: 40px;
+
+    @include respond_to(medium) {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
 }
