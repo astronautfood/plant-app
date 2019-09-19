@@ -1,7 +1,7 @@
 .plant-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(215px, 280px));
-    grid-auto-rows: 255px;
+    grid-auto-rows: 275px;
     grid-gap: 25px;
     font-size: 1.8rem;
 
@@ -16,6 +16,7 @@
         background-color: $card-color;
         padding-bottom: 40px;
         position: relative;
+        overflow: hidden;
 
         p {
             margin-bottom: 15px;
