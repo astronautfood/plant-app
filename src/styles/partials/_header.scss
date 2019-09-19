@@ -1,0 +1,13 @@
+.header {
+    display: grid;
+    grid-template-columns: minmax(200px, 300px) 1fr 30px;
+    align-items: center;
+    grid-gap: 40px;
+    padding: 20px 0 40px;
+
+    &__introduction {
+        font-size: 2.4rem;
+        color: $primary;
+        font-weight: 600;
+    }
+}

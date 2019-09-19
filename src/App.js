@@ -20,7 +20,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div className="app-wrapper">
+        <div className="menu"/>
+        <div className="wrapper">
           <Router basename={"/"}>
             <Route path="/" component={MainView}/>
           </Router>

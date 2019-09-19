@@ -1,0 +1,40 @@
+html{font-size: 62.5%}
+.wrapper {max-width: 1080px; width: 100%; margin: 0 auto; padding: 0 30px;}
+body,h1,h2,h3,h4,h5,h6,p{margin: 0;}
+img{max-width: 100%; width: 100%; display:block; margin: 0;}
+ul{padding: 0; margin: 0;}
+li{list-style-type: none;}
+a{display: block; text-decoration: none; color: #000;}
+
+body {
+	margin: 0;
+	background-color: $bg;
+	font-family: $font-fam;
+}
+
+.menu {
+    height: 50px;
+    background-color: $secondary;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23);
+    position: relative;
+}
+
+.auth {
+    position: absolute;
+    top: -50px;
+    right: 20px;
+    padding: 14px 12px 10px;
+    max-width: 120px;
+    width: 100%;
+    border-color: transparent;
+    border-radius: 8px;
+    font-size: 1.8rem;
+    color: #333;
+    font-weight: 600;
+    background-color: $secondary;
+    cursor: pointer;
+}
+
+.wrapper {
+    position: relative;
+}
