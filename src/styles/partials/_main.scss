@@ -8,5 +8,6 @@ main {
     @include respond_to(medium) {
         grid-template-columns: 1fr;
         justify-items: center;
+        grid-gap: 0;
     }
 }
