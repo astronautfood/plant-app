@@ -15,12 +15,8 @@ class PlantForm extends React.Component {
         dynamicName: '',
         selectedTime: '',
         selectedDate: '',
-        everyOtherDay: '',
-        everyWeek: '',
-        everyTwoWeeks: '',
-        everyThreeWeeks: '',
-        everyMonth: '',
         items: [],
+        isSubmitted: false
     }
 
     componentDidMount() {
@@ -42,7 +38,6 @@ class PlantForm extends React.Component {
 
                         newItemsArray.push(firebaseItem);
                     }
-                    console.log(newItemsArray);
 
                     this.setState({
                         items: newItemsArray
@@ -83,11 +78,13 @@ class PlantForm extends React.Component {
         e.preventDefault();
         const newItem = {
             plantType: this.state.selectedPlant,
-            water: this.state.selectedTime,
+            waterTime: this.state.selectedTime,
             name: this.state.dynamicName,
             dateSubmitted: this.state.selectedDate
         };
         dbRef.push(newItem);
+
+        this.setState({ isSubmitted: true })
     }
 
     removeItem = (key) => {
@@ -243,6 +240,7 @@ class PlantForm extends React.Component {
                     getWaterDate={this.getWaterDate}
                     removeItem={this.removeItem}
                     user={this.state.user}
+                    isSubmitted={this.state.isSubmitted}
                 />
             </React.Fragment>
         )

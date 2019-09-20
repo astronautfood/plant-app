@@ -24,22 +24,23 @@ class PlantCard extends React.Component {
     };
 
     render() {
-        const { items, removeItem } = this.props;
+        const { items, removeItem, isSubmitted, user } = this.props;
         return (
             <ul className="plant-cards">
+                    {isSubmitted && !user && <p className="auth__instruction">Please login to see your plant tracking information!</p>}
                     {items.map((item, i) => {
-                        let lastWatered = moment(item.dateSubmitted);
-                        const waterTime = lastWatered.add('days', this.getWaterDate(item.water));
+                        const lastWatered = moment(item.dateSubmitted);
+                        const waterTime = lastWatered.add('days', this.getWaterDate(item.waterTime));
                         const whenToWater = moment().to(waterTime);
                         return (
                             <li key={i} className="plant-cards__card">
                                 <p className="plant-cards__card--today">{moment().format('LLLL')}</p>
                                 <div className="plant-cards__card--given-details">
                                     Plant details:
-                                    {items.plantType || item.water ? (
+                                    {items.plantType || item.waterTime ? (
                                         <ul>
                                             <li className="plant-cards__card--type">{item.plantType ? `🌿 ${item.plantType}` : ""}</li>
-                                            <li className="plant-cards__card--water-me-every">{item.water ? `🌿 Should be watered ${item.water}` : ""}</li>
+                                            <li className="plant-cards__card--water-me-every">{item.waterTime ? `🌿 Should be watered ${item.waterTime}` : ""}</li>
                                         </ul>
                                     ) : (
                                         <ul>

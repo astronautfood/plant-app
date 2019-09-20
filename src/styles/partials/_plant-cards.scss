@@ -4,6 +4,7 @@
     grid-auto-rows: 275px;
     grid-gap: 25px;
     font-size: 1.8rem;
+    position: relative;
 
     @include respond_to(medium) {
         justify-self: center;

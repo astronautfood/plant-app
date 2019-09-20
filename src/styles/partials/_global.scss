@@ -34,6 +34,14 @@ body {
     font-weight: 600;
     background-color: $secondary;
     cursor: pointer;
+
+    &__instruction {
+        position: absolute;
+        top: 0;
+        color: yellow;
+        font-weight: 700;
+        font-size: 2.2rem;
+    }
 }
 
 .wrapper {
